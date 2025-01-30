@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <title>floyd-warshall</title>
-    <script type="text/javascript" src="function.js"></script>
-    <link rel="stylesheet" href="floyd-warshall.css" media="screen">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-  </head>
-  <body class="u-body">
 
-      <div class="u-align-left u-clearfix u-sheet u-sheet-1">
-        <h1>Floyd-Warshall Algorithmus</h1>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta charset="utf-8">
+ <title>floyd-warshall</title>
+ <script type="text/javascript" src="function.js"></script>
+ <link rel="stylesheet" href="floyd-warshall.css" media="screen">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
 
-        
-        <label for="my_input">Bitte die Matrizen Dimension von (n) mal (n) angeben </label>
-        <input type="number" id="my_input" name="my_input" min="2" max="20":w value="5">
-        <button id="numbersubmit" data-toggle="modal" data-target="#myModal" onclick="createfield()" type="button">GO</button>
-      
-      </div>
+<body>
+ <div>
+  <h1>Floyd-Warshall Algorithmus</h1>
 
-      <div class="u-align-left u-clearfix u-sheet u-sheet-1" id="matrix">
+  <label for="my_input">Bitte die Matrizen Dimension von (n) mal (n) angeben </label>
+  <input type="number" id="my_input" name="my_input" min="2" max="20" :w value="5">
+  <button id="numbersubmit" data-toggle="modal" data-target="#myModal" onclick="createfield()" type="button">GO</button>
 
+ </div>
 
-      </div>
+ <div id="matrix"></div>
+ <div id="matrixresponse"></div>
 
+</body>
 
-      <div class="u-align-left u-clearfix u-sheet u-sheet-1" id="matrixresponse">
-
-
-      </div>
-  </body>
 </html>
