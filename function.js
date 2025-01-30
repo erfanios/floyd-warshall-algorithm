@@ -8,7 +8,7 @@ function createfield() {
 
   //$("#matrix").append('<form id="matrixinput" method="post" onsubmit="return false"><br>');
 
-  var inputs = '<form id="matrix" action="../response.sh"><br>';
+  var inputs = '<form id="matrixform"><br>';
 
   for (var i = 0; i < n; i++) {
    for (var k = 0; k < n; k++) {
@@ -16,7 +16,7 @@ function createfield() {
    }
    inputs += '<br>';
   }
-  inputs += '<input id="matrixsubmit" type="submit" value="bestätigen">';
+  inputs += '<button type="submit">Submit</button>';
   inputs += '</form>';
 
   $("#matrix").append(inputs);
@@ -32,30 +32,41 @@ function createfield() {
 
  }*/
 
-
-
 }
 
 
-/*
-$('#matrixsubmit').click(function(e){
-  e.preventDefault();
-  n = $('#matrixinput').val();
-  $('#matrixresponse').html('');
-  $('#matrixresponse').append(n);
-  
-})
- 
+function response () {
+console.log("hello");
 
-function response() {
-
-  
-  n = $('#matrix').val();
-  $('#matrixresponse').html('');
-  $('#matrixresponse').append(n +'Hi there kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-  
 }
- 
-*/
 
+$(document).ready(function() {
+ // Handle form submission dynamically
+ $(document).on('submit', '#matrixform', function(event) {
+     event.preventDefault();
 
+     var matrix = [];
+     var n = parseInt($('#my_input').val());
+
+     for (var i = 0; i < n; i++) {
+         var row = [];
+         for (var k = 0; k < n; k++) {
+             row.push(parseInt($('#r' + i + 'c' + k).val()) || 0);
+         }
+         matrix.push(row);
+     }
+
+     // Process the matrix (modify this function as needed)
+     var resultMatrix = processMatrix(matrix);
+
+     $("#matrixresponse").html('<h2>Matrix Data Processed</h2>');
+     $("#matrixresponse").append('<pre>Original Matrix:\n' + JSON.stringify(matrix, null, 2) + '</pre>');
+     $("#matrixresponse").append('<pre>Processed Matrix:\n' + JSON.stringify(resultMatrix, null, 2) + '</pre>');
+ });
+
+ // Example matrix processing function
+ function processMatrix(matrix) {
+     // Example: Multiply each element by 2
+     return matrix.map(row => row.map(value => value * 2));
+ }
+});
