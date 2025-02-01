@@ -1,10 +1,12 @@
-function createfield() {
+async function createfield() {
  n = $('#my_input').val();
  $("#matrix").html('');
  if (n <= 20 && n >= 2) {
 
   $("#matrix").html('');
-  $("#matrix").append('<h2>Bitte Adjazenmatrix(A)(Verbindungsmatrix) eingeben</h2>')
+
+  const text = await getTranslationTextAsync("fill_the_matrix");
+  $("#matrix").append('<h2 id="header_of_matrix" >' + text + '</h2>')
 
   //$("#matrix").append('<form id="matrixinput" method="post" onsubmit="return false"><br>');
 
@@ -16,7 +18,8 @@ function createfield() {
    }
    inputs += '<br>';
   }
-  inputs += '<button type="submit">Submit</button>';
+  const submit = await getTranslationTextAsync("submit");
+  inputs += '<button id="matrixSubmit" type="submit">' + submit + '</button>';
   inputs += '</form>';
 
   $("#matrix").append(inputs);
@@ -24,7 +27,6 @@ function createfield() {
  }
  else {
   $("#matrix").append("Bitte einen n Dimension von unter 2-20 wählen.");
-
  }
  /*
  for (var i = 1; i <= n; i++) {
@@ -34,13 +36,76 @@ function createfield() {
 
 }
 
+function getTranslationText(keyName) {
+ const browserLanguage = typeof navigator !== 'undefined' ? navigator.language : 'en';
+ const language = filterLanguage(browserLanguage.split("-")[0]);
+ let translationText = '';
 
-function response () {
-console.log("hello");
+ $.ajax({
+ url: `translation/${language}.json`,
+ async: false,
+ dataType: 'json',
+ success: function(data) {
+   translationText = data[keyName];
+ }
+ });
 
+ return translationText;
+}
+
+
+async function getTranslationTextAsync(keyName) {
+ const browserLanguage = typeof navigator !== 'undefined' ? navigator.language : 'en-US';
+ const language = filterLanguage(browserLanguage.split("-")[0]);
+ let translationText = '';
+
+  try {
+  const response = await fetch(`translation/${language}.json`);
+  const data = await response.json();
+  translationText = data[keyName];
+  } catch (error) {
+  console.error('Error fetching translation:', error);
+  }
+
+ return translationText;
+}
+
+function loadTranslations(language) {
+ $.getJSON(`translation/${language}.json`, function(data) {
+   $('title').text(data.title);
+   $('#heading').text(data.heading);
+   $('#label').text(data.label);
+   $('#my_input').attr('placeholder', data.input_placeholder);
+   $('#numbersubmit').text(data.button_text);
+   $('#header_of_matrix')?.text(data.fill_the_matrix);
+   $('#matrixSubmit')?.text(data.submit);
+ });
+}
+
+function filterLanguage(language) {
+ if (language && language === 'de') {
+  return 'de';
+ } else {
+  return 'en';
+ }
 }
 
 $(document).ready(function() {
+ const browserLanguage = navigator.language;
+ var language = browserLanguage.split("-")[0];
+ language = filterLanguage(language);
+
+ $('#languageSwitcher').val(language);
+
+ // Load translations for the initial language
+ loadTranslations(language);
+
+ // Sprachumschaltung
+ $('#languageSwitcher').change(function() {
+  var selectedLanguage = filterLanguage($(this).val());
+  loadTranslations(selectedLanguage);
+ });
+
  // Handle form submission dynamically
  $(document).on('submit', '#matrixform', function(event) {
      event.preventDefault();

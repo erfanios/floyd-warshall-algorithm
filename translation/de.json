@@ -1,0 +1,9 @@
+{
+ "title": "floyd-warshall",
+ "heading": "Floyd-Warshall Algorithmus",
+ "label": "Bitte die Matrizen Dimension von (n) mal (n) angeben",
+ "input_placeholder": "5",
+ "button_text": "Erstellen",
+ "fill_the_matrix": "Bitte Adjazenmatrix(A)(Verbindungsmatrix) eingeben",
+ "submit": "Berechnen"
+}

@@ -1,0 +1,9 @@
+{
+ "title": "floyd-warshall",
+ "heading": "Floyd-Warshall Algorithm",
+ "label": "Please specify the matrix dimension of (n) by (n)",
+ "input_placeholder": "5",
+ "button_text": "Create",
+  "fill_the_matrix": "Please enter the adjacency matrix (A) (connection matrix)",
+ "submit": "Calculate"
+}
