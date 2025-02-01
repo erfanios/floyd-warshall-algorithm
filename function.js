@@ -1,3 +1,14 @@
+const my_input = "my_input";
+const str_matrix_dimensions = "matrix_dimensions";
+
+// Here starts everything
+$(document).ready(function() {
+ handleMatrixSubmit();
+
+ handleLanguageAndChanges();
+});
+
+
 async function createfield() {
  n = $('#my_input').val();
  $("#matrix").html('');
@@ -11,6 +22,7 @@ async function createfield() {
   //$("#matrix").append('<form id="matrixinput" method="post" onsubmit="return false"><br>');
 
   var inputs = '<form id="matrixform"><br>';
+  inputs += '<input type="hidden" id="'+ str_matrix_dimensions +'" value="'+ n +'">';
 
   for (var i = 0; i < n; i++) {
    for (var k = 0; k < n; k++) {
@@ -31,10 +43,11 @@ async function createfield() {
  /*
  for (var i = 1; i <= n; i++) {
    $("#matrix").append('<span>Item ' + i + ' </span><input id="rolo_add' + i + '" name="addposition"  type="text" value="" required/><br>');
-
- }*/
+ }
+ */
 
 }
+
 
 function getTranslationText(keyName) {
  const browserLanguage = typeof navigator !== 'undefined' ? navigator.language : 'en';
@@ -90,7 +103,7 @@ function filterLanguage(language) {
  }
 }
 
-$(document).ready(function() {
+function handleLanguageAndChanges() {
  const browserLanguage = navigator.language;
  var language = browserLanguage.split("-")[0];
  language = filterLanguage(language);
@@ -105,17 +118,20 @@ $(document).ready(function() {
   var selectedLanguage = filterLanguage($(this).val());
   loadTranslations(selectedLanguage);
  });
+}
 
- // Handle form submission dynamically
- $(document).on('submit', '#matrixform', function(event) {
+function handleMatrixSubmit() {
+    // Handle form submission dynamically
+    $(document).on('submit', '#matrixform', function(event) {
      event.preventDefault();
-
+  
      var matrix = [];
-     var n = parseInt($('#my_input').val());
-
-     for (var i = 0; i < n; i++) {
+     
+     var matrixDimensions = parseInt($('#' + str_matrix_dimensions).val());
+  
+     for (var i = 0; i < matrixDimensions; i++) {
          var row = [];
-         for (var k = 0; k < n; k++) {
+         for (var k = 0; k < matrixDimensions; k++) {
              row.push(parseInt($('#r' + i + 'c' + k).val()) || 0);
          }
          matrix.push(row);
@@ -123,15 +139,15 @@ $(document).ready(function() {
 
      // Process the matrix (modify this function as needed)
      var resultMatrix = processMatrix(matrix);
-
+  
      $("#matrixresponse").html('<h2>Matrix Data Processed</h2>');
      $("#matrixresponse").append('<pre>Original Matrix:\n' + JSON.stringify(matrix, null, 2) + '</pre>');
      $("#matrixresponse").append('<pre>Processed Matrix:\n' + JSON.stringify(resultMatrix, null, 2) + '</pre>');
- });
+   });
+}
 
- // Example matrix processing function
- function processMatrix(matrix) {
-     // Example: Multiply each element by 2
-     return matrix.map(row => row.map(value => value * 2));
- }
-});
+// Example matrix processing function
+function processMatrix(matrix) {
+ // Example: Multiply each element by 2
+ return matrix.map(row => row.map(value => value * 2));
+}
