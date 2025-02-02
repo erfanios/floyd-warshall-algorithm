@@ -131,7 +131,6 @@ function handleMatrixSubmit() {
      event.preventDefault();
   
      let matrix = [];
-     
      let matrixDimensions = parseInt($('#' + str_matrix_dimensions).val());
   
      for (let i = 0; i < matrixDimensions; i++) {
@@ -142,13 +141,9 @@ function handleMatrixSubmit() {
          matrix.push(row);
      }
 
-     // Process the matrix (modify this function as needed)
      let resultHtml = processMatrix(matrix);
   
      $("#matrixresponse").html(`<h2 id="calculationDone">${getTranslationText("calculationDone")}</h2>`);
-  
-     // $("#matrixresponse").append('<pre>Original Matrix:\n' + JSON.stringify(matrix, null, 2) + '</pre>');
-     // $("#matrixresponse").append('<pre>Processed Matrix:\n' + JSON.stringify(resultMatrix, null, 2) + '</pre>');
 
      $("#matrixresponse").append(resultHtml);
    });

@@ -1,29 +1,26 @@
-let matrix;
-const numberForUndefined = -1;
+const undefinedNumberField = Number.MAX_SAFE_INTEGER;
 
 // Example matrix processing function
-export default function processMatrix(originalMatrix) {
- matrix = originalMatrix;
+export default function processMatrix(matrix) {
  
- const d0 = create_d0(originalMatrix);
- let html = convertToHtmlTable(d0);
- html += d_of_k(d0, 0);
+ matrix = create_d0(matrix);
+ let html = convertToHtmlTable(matrix);
+ html += d_of_k(matrix, 0);
  return html;
 }
 
 // Creates the distanc matrix of matrix with distanc 0
-function create_d0 (aMatrix) {
- let d0_Matrix = aMatrix;
- const matrixDimensions = aMatrix.length;
+function create_d0 (d0_Matrix) {
+ const matrixDimensions = d0_Matrix.length;
  for (let i = 0; i < matrixDimensions; i++) {
   for (let j = 0; j < matrixDimensions; j++) {
    // Example operation: set each element to 0
    if (i === j) {
     d0_Matrix[i][j] = 0;
-   } else if (aMatrix[i][j] > 0) {
-    d0_Matrix[j][j] = aMatrix[i][j];
+   } else if (d0_Matrix[i][j] > 0) {
+     // Do nothing
    } else {
-    d0_Matrix[i][j] = numberForUndefined;
+    d0_Matrix[i][j] = undefinedNumberField;
    }
   }
  }
@@ -40,7 +37,7 @@ function convertToHtmlTable(matrix) {
   html += "<tr>";
   for (let j = 0; j < n; j++) {
    const value = matrix[i][j];
-   if (value === numberForUndefined) {
+   if (value === undefinedNumberField) {
     html += "<td>#</td>";
    } else {
     html += `<td>${value}</td>`;
@@ -57,13 +54,13 @@ function td(inValue, cssClass) {
  let html = "";
 
  if (cssClass.length === 0) {
- if (inValue === numberForUndefined) {
+ if (inValue === undefinedNumberField) {
   html += "<td>#</td>";
  } else {
   html += `<td>${inValue}</td>`;
  }
  } else {
- if (inValue === numberForUndefined) {
+ if (inValue === undefinedNumberField) {
   html += `<td class="${cssClass}">#</td>`;
  } else {
   html += `<td class="${cssClass}">${inValue}</td>`;
@@ -79,67 +76,68 @@ function tdstr(inValue) {
 
 // Creates the distanc matrix of matrix with distanc `K`
 // It is a recursiv function
-export function d_of_k(list, num) {
+export function d_of_k(list, k_step) {
  let html = "";
  const n = list.length;
- let sInstance, rInstance;
- const r = num;
+ let i_k_value, k_j_value;
 
- if (num < n) {
- html += "<br><table>";
- html += "<tr>";
- html += tdstr(`D(${num})`);
- html += "<td>";
- html += "<table>";
-
- for (let s = 0; s < n; s++) {
-  sInstance = list[s][r];
-
-  if (s !== r && sInstance !== numberForUndefined) {
+ if (k_step < n) {
+  html += "<br><table>";
   html += "<tr>";
-  for (let zr = 0; zr < n; zr++) {
-   rInstance = list[r][zr];
-   let value = list[s][zr];
-   const sum = rInstance + sInstance;
+  html += tdstr(`D(${k_step})`);
+  html += "<td>";
+  html += "<table>";
 
-   if (r !== zr && rInstance !== numberForUndefined && (sum < value || value === numberForUndefined)) {
-   list[s][zr] = sum;
-   value = sum;
-   html += td(value, "corange");
-   } else if (r === zr) {
-   html += td(value, "cgreen");
-   } else {
-   html += td(value, "");
-   }
-  }
-  html += "</tr>";
-  } else if (s === r) {
-  html += '<tr class="highlight">';
+  
   for (let i = 0; i < n; i++) {
-   const value = list[s][i];
-   html += td(value, "");
-  }
-  html += "</tr>";
-  } else {
-  html += "<tr>";
-  for (let i = 0; i < n; i++) {
-   const value = list[s][i];
-   if (i === r) {
-   html += td(value, "cgreen");
-   } else {
-   html += td(value, "");
+   i_k_value = list[i][k_step];
+
+   if (i !== k_step && i_k_value !== undefinedNumberField) { //wenn (nicht) Zeilen Nr. die gewählte n von d(n) spricht
+    html += "<tr>";
+    for (let j = 0; j < n; j++) {
+     k_j_value = list[k_step][j];
+     let distance_of_i_to_j = list[i][j];
+     const sum_of_both_fields = k_j_value + i_k_value;
+
+     if (k_step !== j && k_j_value !== undefinedNumberField && (sum_of_both_fields < distance_of_i_to_j || distance_of_i_to_j === undefinedNumberField)) {
+      
+     list[i][j] = sum_of_both_fields;
+     distance_of_i_to_j = sum_of_both_fields;
+     html += td(distance_of_i_to_j, "corange");
+     } else if (k_step === j) {
+     html += td(distance_of_i_to_j, "cgreen");
+     } else {
+     html += td(distance_of_i_to_j, "");
+     }
+    }
+    html += "</tr>";
+   } else if (i === k_step) {
+   html += '<tr class="highlight">';
+   for (let row_index = 0; row_index < n; row_index++) {
+    const value = list[i][row_index];
+    html += td(value, "");
    }
+   html += "</tr>";
+   } else {
+   html += "<tr>";
+   for (let column_index = 0; column_index < n; column_index++) {
+    const value = list[i][column_index];
+    if (column_index === k_step) {
+    html += td(value, "cgreen");
+    } else {
+    html += td(value, "");
+    }
+   }
+   html += "</tr>";
   }
+  }
+
+  html += "</table>";
+  html += "</td>";
   html += "</tr>";
-  }
- }
+  html += "</table>";
 
- html += "</table>";
- html += "</td>";
- html += "</tr>";
- html += "</table>";
-
- html += d_of_k(list, ++num);
+  html += d_of_k(list, ++k_step);
  }
 
  return html;

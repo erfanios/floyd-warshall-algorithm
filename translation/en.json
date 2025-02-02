@@ -1,6 +1,6 @@
 {
  "title": "floyd-warshall",
- "heading": "Floyd-Warshall Algorithm",
+ "heading": "Floyd-Warshall Algorithm for<br>'All Pairs Shortest Paths'",
  "label": "Please specify the matrix dimension of (n) by (n)",
  "input_placeholder": "5",
  "button_text": "Create",
