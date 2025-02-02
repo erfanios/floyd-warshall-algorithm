@@ -1,3 +1,5 @@
+import processMatrix from './floyd-warshall.js';
+
 const my_input = "my_input";
 const str_matrix_dimensions = "matrix_dimensions";
 
@@ -8,9 +10,10 @@ $(document).ready(function() {
  handleLanguageAndChanges();
 });
 
-
-async function createfield() {
- n = $('#my_input').val();
+// Funktion global verfügbar machen
+window.createfield = createfield;
+export async function createfield() {
+ let n = await $('#my_input').val();
  $("#matrix").html('');
  if (n <= 20 && n >= 2) {
 
@@ -21,11 +24,11 @@ async function createfield() {
 
   //$("#matrix").append('<form id="matrixinput" method="post" onsubmit="return false"><br>');
 
-  var inputs = '<form id="matrixform"><br>';
+  let inputs = '<form id="matrixform"><br>';
   inputs += '<input type="hidden" id="'+ str_matrix_dimensions +'" value="'+ n +'">';
 
-  for (var i = 0; i < n; i++) {
-   for (var k = 0; k < n; k++) {
+  for (let i = 0; i < n; i++) {
+   for (let k = 0; k < n; k++) {
     inputs += '<input value="0" min="0" type="number" id="r' + i + 'c' + k + '" name="r' + i + 'c' + k + '" style=" margin: auto; width:60px;">';
    }
    inputs += '<br>';
@@ -41,7 +44,7 @@ async function createfield() {
   $("#matrix").append("Bitte einen n Dimension von unter 2-20 wählen.");
  }
  /*
- for (var i = 1; i <= n; i++) {
+ for (let i = 1; i <= n; i++) {
    $("#matrix").append('<span>Item ' + i + ' </span><input id="rolo_add' + i + '" name="addposition"  type="text" value="" required/><br>');
  }
  */
@@ -92,6 +95,7 @@ function loadTranslations(language) {
    $('#numbersubmit').text(data.button_text);
    $('#header_of_matrix')?.text(data.fill_the_matrix);
    $('#matrixSubmit')?.text(data.submit);
+   $('#calculationDone')?.text(data.calculationDone);
  });
 }
 
@@ -105,7 +109,7 @@ function filterLanguage(language) {
 
 function handleLanguageAndChanges() {
  const browserLanguage = navigator.language;
- var language = browserLanguage.split("-")[0];
+ let language = browserLanguage.split("-")[0];
  language = filterLanguage(language);
 
  $('#languageSwitcher').val(language);
@@ -115,7 +119,7 @@ function handleLanguageAndChanges() {
 
  // Sprachumschaltung
  $('#languageSwitcher').change(function() {
-  var selectedLanguage = filterLanguage($(this).val());
+  let selectedLanguage = filterLanguage($(this).val());
   loadTranslations(selectedLanguage);
  });
 }
@@ -125,29 +129,26 @@ function handleMatrixSubmit() {
     $(document).on('submit', '#matrixform', function(event) {
      event.preventDefault();
   
-     var matrix = [];
+     let matrix = [];
      
-     var matrixDimensions = parseInt($('#' + str_matrix_dimensions).val());
+     let matrixDimensions = parseInt($('#' + str_matrix_dimensions).val());
   
-     for (var i = 0; i < matrixDimensions; i++) {
-         var row = [];
-         for (var k = 0; k < matrixDimensions; k++) {
+     for (let i = 0; i < matrixDimensions; i++) {
+         let row = [];
+         for (let k = 0; k < matrixDimensions; k++) {
              row.push(parseInt($('#r' + i + 'c' + k).val()) || 0);
          }
          matrix.push(row);
      }
 
      // Process the matrix (modify this function as needed)
-     var resultMatrix = processMatrix(matrix);
+     let resultHtml = processMatrix(matrix);
   
-     $("#matrixresponse").html('<h2>Matrix Data Processed</h2>');
-     $("#matrixresponse").append('<pre>Original Matrix:\n' + JSON.stringify(matrix, null, 2) + '</pre>');
-     $("#matrixresponse").append('<pre>Processed Matrix:\n' + JSON.stringify(resultMatrix, null, 2) + '</pre>');
-   });
-}
+     $("#matrixresponse").html(`<h2 id="calculationDone">${getTranslationText("calculationDone")}</h2>`);
+  
+     // $("#matrixresponse").append('<pre>Original Matrix:\n' + JSON.stringify(matrix, null, 2) + '</pre>');
+     // $("#matrixresponse").append('<pre>Processed Matrix:\n' + JSON.stringify(resultMatrix, null, 2) + '</pre>');
 
-// Example matrix processing function
-function processMatrix(matrix) {
- // Example: Multiply each element by 2
- return matrix.map(row => row.map(value => value * 2));
+     $("#matrixresponse").append(resultHtml);
+   });
 }
