@@ -6,6 +6,7 @@ const str_matrix_dimensions = "matrix_dimensions";
 // Here starts everything
 $(document).ready(function() {
  handleMatrixSubmit();
+ createfield(); // An empty Matrix should be created at the beginning, just so the page is not empty
 
  handleLanguageAndChanges();
 });
