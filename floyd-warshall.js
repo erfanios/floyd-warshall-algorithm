@@ -60,11 +60,11 @@ function td(inValue, cssClass) {
   html += `<td>${inValue}</td>`;
  }
  } else {
- if (inValue === undefinedNumberField) {
-  html += `<td class="${cssClass}">#</td>`;
- } else {
-  html += `<td class="${cssClass}">${inValue}</td>`;
- }
+  if (inValue === undefinedNumberField) {
+   html += `<td class="${cssClass}">#</td>`;
+  } else {
+   html += `<td class="${cssClass}">${inValue}</td>`;
+  }
  }
 
  return html;

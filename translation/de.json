@@ -1,6 +1,6 @@
 {
  "title": "floyd-warshall",
- "heading": "Floyd-Warshall Algorithmus",
+ "heading": "Floyd-Warshall Algorithmus für:",
  "label": "Bitte die Matrizen Dimension von (n) mal (n) angeben",
  "input_placeholder": "5",
  "button_text": "Erstellen",
