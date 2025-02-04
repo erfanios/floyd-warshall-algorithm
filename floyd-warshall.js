@@ -112,10 +112,10 @@ export function d_of_k(list, k_step) {
     }
     html += "</tr>";
    } else if (i === k_step) {
-   html += '<tr class="highlight">';
+   html += '<tr class="cgreen">';
    for (let row_index = 0; row_index < n; row_index++) {
     const value = list[i][row_index];
-    html += td(value, "");
+    html += td(value, "cgreen");
    }
    html += "</tr>";
    } else {

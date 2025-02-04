@@ -1,0 +1,69 @@
+
+.corange {
+ background-color: #ffcb46;
+ font-weight: bold;
+ border: 1px solid black;
+}
+
+.cgreen {
+  background-color: #8fed8f;
+  color: black;
+  border: 1px solid black;
+}
+
+.highlight {
+ background-color: yellow;
+}
+
+table {
+ border-collapse: collapse;
+ width: 100%;
+}
+
+table, th, td {
+ border: 1px solid #FFA500;
+}
+
+th, td {
+ padding: 8px;
+ text-align: left;
+}
+
+button {
+ background-color: #ffcb46; /* Warm yellow */
+ color: black;
+ border: none;
+ padding: 10px 20px;
+ font-size: 14px;
+ border-radius: 20px;
+ cursor: pointer;
+ text-align: center;
+ display: inline-block;
+ margin: 10px;
+}
+
+button:hover {
+ background-color: #d9a830; /* Slightly darker yellow */
+ border: 2px solid rgb(69, 132, 250);
+}
+
+
+
+form {
+ border-collapse: collapse;
+ width: 100%;
+}
+
+form, input, button {
+ border: 1px solid #FFA500;
+}
+
+input, button {
+ padding: 8px;
+ text-align: left;
+}
+
+.matrix_input {
+ margin: auto; 
+ width:60px;
+}

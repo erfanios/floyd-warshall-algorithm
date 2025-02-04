@@ -30,7 +30,7 @@ export async function createfield() {
 
   for (let i = 0; i < n; i++) {
    for (let k = 0; k < n; k++) {
-    inputs += '<input value="0" min="0" type="number" id="r' + i + 'c' + k + '" name="r' + i + 'c' + k + '" style=" margin: auto; width:60px;">';
+    inputs += '<input value="0" min="0" type="number" id="r' + i + 'c' + k + '" name="r' + i + 'c' + k + '" class="matrix_input">';
    }
    inputs += '<br>';
   }
