@@ -43,11 +43,8 @@ button {
 }
 
 button:hover {
- background-color: #d9a830; /* Slightly darker yellow */
- border: 2px solid rgb(69, 132, 250);
+ border: 2px solid #ff4646;
 }
-
-
 
 form {
  border-collapse: collapse;
@@ -72,4 +69,18 @@ input, button {
   .matrix_input {
   width: auto;
   }
+}
+
+/* Hidding Standard-Spinnbutton
+For Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hidding Standard-Spinnbutton
+For Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
